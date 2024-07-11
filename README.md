@@ -1,4 +1,4 @@
-# 用CapRover部署:
+# deploy with CapRover:
       在VPS和自己linux PC安装tailscale
       在VPS安装docker: curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
       在VPS启动capRover container:
