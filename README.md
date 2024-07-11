@@ -21,7 +21,7 @@
       
       在自己linux PC测试 转换好的llama3-70b-8192的api:
       $ curl -X 'POST' \
-        'http://100.100.100.100:3001/v1/chat/completions' \
+        'http://<vps的tailscale内网ip>:3001/v1/chat/completions' \
         -H 'accept: application/json' \
         -H 'Authorization: Bearer sk-HEcPhzTy1Mu0WDJU6a67023' \
         -H 'Content-Type: application/json' \
