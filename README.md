@@ -1,7 +1,23 @@
+      在VPS和自己PC安装tailscale
+      在VPS安装docker: curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
+      在VPS启动capRover:
+      sudo docker run -p 80:80 -p 443:443 -p 3000:3000 -e MAIN_NODE_IP_ADDRESS='<vps的tailscale内网ip>' -e BY_PASS_PROXY_CHECK='TRUE' -e ACCEPTED_TERMS=true -v /var/run/docker.sock:/var/run/docker.sock -v /captain:/captain caprover/caprover
+
+      访问 http://<vps的tailscale内网ip>:3000
+      Apps / Create New App (填入App_name, 勾选Has Persistent Data 则在Apps / App_name / App Configs 页面才可以配置Persistent Directories(Path in App+Path on Host))
+      #Apps / App_name / Deployment /  Method 4: Deploy plain Dockerfile / Deploy Now      #不会保存Dokcerfile内容, 只是会保留各个版本build好的image
+      Apps / App_name / Deployment /   Method 6: Deploy via ImageName(填入justsong/one-api:latest) / Deploy Now
+      Apps / App_name / App Configs / Port Mapping  将Server Port填3001(因为3000已被CapRover占用), 将Container Port填3000
+      Apps / App_name / App Configs / Persistent Directories  将Path in App填/data, 将Path on Host填/home/<vps user>/data_oneapi
+      Apps / App_name / App Configs 底部 点击 "Save & Restart"
+
+      访问 http://<vps的tailscale内网ip>:3001
+      
+
       $ curl -X 'POST' \
         'http://100.100.100.100:3001/v1/chat/completions' \
         -H 'accept: application/json' \
-        -H 'Authorization: Bearer 123456' \
+        -H 'Authorization: Bearer sk-HEcPhzTy1Mu0WDJU6a67023' \
         -H 'Content-Type: application/json' \
         -d '{
         "model": "llama3-70b-8192",
