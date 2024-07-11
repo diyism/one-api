@@ -3,7 +3,9 @@
       在VPS启动capRover:
       sudo docker run -p 80:80 -p 443:443 -p 3000:3000 -e MAIN_NODE_IP_ADDRESS='<vps的tailscale内网ip>' -e BY_PASS_PROXY_CHECK='TRUE' -e ACCEPTED_TERMS=true -v /var/run/docker.sock:/var/run/docker.sock -v /captain:/captain caprover/caprover
 
-      访问 http://<vps的tailscale内网ip>:3000
+      访问 CapRover配置页面: http://<vps的tailscale内网ip>:3000
+      默认密码是captain42
+      Apps / Settings / Change Password 修改默认密码
       Apps / Create New App (填入App_name, 勾选Has Persistent Data 则在Apps / App_name / App Configs 页面才可以配置Persistent Directories(Path in App+Path on Host))
       #Apps / App_name / Deployment /  Method 4: Deploy plain Dockerfile / Deploy Now      #不会保存Dokcerfile内容, 只是会保留各个版本build好的image
       Apps / App_name / Deployment /   Method 6: Deploy via ImageName(填入justsong/one-api:latest) / Deploy Now
@@ -11,9 +13,12 @@
       Apps / App_name / App Configs / Persistent Directories  将Path in App填/data, 将Path on Host填/home/<vps user>/data_oneapi
       Apps / App_name / App Configs 底部 点击 "Save & Restart"
 
-      访问 http://<vps的tailscale内网ip>:3001
+      oneapi比chat2api更强, 可以把各种模型都转化成openai chatgpt api的兼容格式
+      访问 oneapi配置页面: http://<vps的tailscale内网ip>:3001
+      "渠道" 下添加: 类型Groq, 名称groq1, 分组Default, 模型llama3-70b-8192(去掉其它gemma等等, 感觉回答很多问题llama3-70b-8192比gpt4o更强), 密钥(在https://console.groq.com/keys 生成), 点击"提交"按钮
+      "令牌" 下添加: 名称groq1, 模型范围llama3-70b-8192, 过期时间 永不过期, 额度 无限额度, 点击"提交"按钮
       
-      在自己linux PC测试:
+      在自己linux PC测试 转换好的llama3-70b-8192的api:
       $ curl -X 'POST' \
         'http://100.100.100.100:3001/v1/chat/completions' \
         -H 'accept: application/json' \
@@ -24,6 +29,22 @@
         "messages": [
           {
             "content": "从基因学角度来说, 先有鸡蛋 还是 先有鸡?",
+            "role": "user"
+          }
+        ],
+        "stream": false
+      }'
+
+      groq的api实际不需要转换, 如果前端部署在国外服务器, 可以直接访问:
+      $ curl -X 'POST' \
+      'https://api.groq.com/openai/v1/chat/completions' \
+      -H 'accept: application/json'  -H 'Authorization: Bearer gsk_coOeyzCOrDb' \
+      -H 'Content-Type: application/json' \
+      -d '{
+        "model": "llama3-70b-8192",
+        "messages": [
+          {
+            "content": "用中文回答: 从基因学角度来说, 先有鸡蛋 还是 先有鸡?",
             "role": "user"
           }
         ],
