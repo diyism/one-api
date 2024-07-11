@@ -1,3 +1,19 @@
+      $ curl -X 'POST' \
+        'http://100.100.100.100:3001/v1/chat/completions' \
+        -H 'accept: application/json' \
+        -H 'Authorization: Bearer 123456' \
+        -H 'Content-Type: application/json' \
+        -d '{
+        "model": "llama3-70b-8192",
+        "messages": [
+          {
+            "content": "从基因学角度来说, 先有鸡蛋 还是 先有鸡?",
+            "role": "user"
+          }
+        ],
+        "stream": false
+      }'
+
 <p align="right">
    <strong>中文</strong> | <a href="./README.en.md">English</a> | <a href="./README.ja.md">日本語</a>
 </p>
