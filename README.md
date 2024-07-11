@@ -1,6 +1,6 @@
       在VPS和自己linux PC安装tailscale
       在VPS安装docker: curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
-      在VPS启动capRover:
+      在VPS启动capRover container:
       sudo docker run -p 80:80 -p 443:443 -p 3000:3000 -e MAIN_NODE_IP_ADDRESS='<vps的tailscale内网ip>' -e BY_PASS_PROXY_CHECK='TRUE' -e ACCEPTED_TERMS=true -v /var/run/docker.sock:/var/run/docker.sock -v /captain:/captain caprover/caprover
 
       访问 CapRover配置页面: http://<vps的tailscale内网ip>:3000
